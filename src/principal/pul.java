@@ -50,10 +50,22 @@ class calcula extends JPanel{
     
     public void paint(Graphics g){
 	
-	int[] mapa = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36};
+	//int[] mapa = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36};
+	
 	int relativaX;
 	int relativaY;
-    	int totalTils = 36;
+    	int totalTils = 100;
+    	int[] mapa = new int [totalTils];
+    	for(int n=0;n<totalTils;n++){
+    	    mapa[n]=n+1;
+    	    
+    	}
+    	
+    	for(int m: mapa){
+    	    
+    	    System.out.print(" , "+m);
+    	}
+    	
     	int cuadrante = (int) Math.sqrt(totalTils);
     	int diago = (cuadrante+cuadrante)-6;
     	
@@ -110,7 +122,7 @@ class calcula extends JPanel{
     	 
  	    for(int nAlma=0;nAlma<alma.length;nAlma++){
     		
-     	System.out.println(" alma["+nAlma+"] = "+alma[nAlma]+"  => "+mapa[alma[nAlma]]+"   ||| lp:"+regreLoop+" * "+f);
+     	//System.out.println(" alma["+nAlma+"] = "+alma[nAlma]+"  => "+mapa[alma[nAlma]]+"   ||| lp:"+regreLoop+" * "+f);
 
      	g.drawString(""+mapa[alma[nAlma]],almaX[nAlma], almaY[nAlma]); 
  	    }
