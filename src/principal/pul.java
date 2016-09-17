@@ -54,7 +54,8 @@ class calcula extends JPanel{
 	
 	int relativaX;
 	int relativaY;
-    	int totalTils = 100;
+    	int totalTils = 64;
+    	
     	int[] mapa = new int [totalTils];
     	for(int n=0;n<totalTils;n++){
     	    mapa[n]=n+1;
