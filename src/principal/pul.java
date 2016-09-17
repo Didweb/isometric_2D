@@ -87,10 +87,11 @@ class calcula extends JPanel{
             	}
             	alma[lp]=(lp*cuadrante);
             	if(lp==0 && f>0){
-            	alma[lp]=f+1;   
+            	alma[lp]=f;   
             	} else if(lp>0){
             	    
-            	    alma[lp]=alma[lp]+((f+1)-lp);
+            	    alma[lp]=alma[lp]+((f)-lp);
+            	   // alma[lp]=alma[lp];//+((f+1)-lp);
             	}
             	System.out.println(" cuadrante:"+cuadrante+" * "+lp+" = "+((lp*cuadrante))+"  valor["+lp+"]= "+alma[lp]);
             	almaX[lp]=relativaX;
