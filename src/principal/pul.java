@@ -194,7 +194,9 @@ class calcula{
     	}
     	
     	int inrever = diago;
-    	int valn = diago;
+    	int valn = 2;
+    	int nn = n;
+    	int fijdiagos=1;
     	for(int f=0;f<diago;f++){
     	System.out.println("---------------------------------- Diagonal: "+((f+diago)+1));
    	 int[] alma ;
@@ -206,21 +208,37 @@ class calcula{
     	 
     	
     	for (int x=0;x<inrever-1;x++){
-    	    	alma[x] = res[n-(valn)][0]+1;
-    	    	almaX[x] = 0;
-    	    	almaY[x] = 0;
+    	    
+    	    
+    	    if (f==0){
+    		alma[x] = res[n-(valn)][0]+1;
+    	    } else {
+    		alma[x] = res[nn-(diago-fijdiagos)][0]+1;
+    	    }
+    	    	
+    	    	
+            	relativaX = (f-x)*(anchoTil/2)+(scrollX-(x*anchoTil/4));
+            	relativaY = (f)*(altoTil)+scrollY+(diago*altoTil);
+    	    	
+    	    	almaX[x] = relativaX;
+    	    	almaY[x] = relativaY;
         	
+
         	
-        	
-        	System.out.println(n+" - "+valn+" = "+(n-valn)+"  valor["+(n-valn)+"]= "+alma[x]);
+        	System.out.println(nn+" - "+(diago-(x))+" = "+(nn-(diago-(x)))+"  valor["+(nn-(diago-(x)))+"]= "+alma[x]);
     	
-            	res[n][0] = alma[x];
-        	res[n][1] = almaX[x];
-        	res[n][2] = almaY[x];
-        	n++;
+            	res[nn][0] = alma[x];
+        	res[nn][1] = almaX[x];
+        	res[nn][2] = almaY[x];
+        	
+        	valn++;
+        	nn++;
+        	
     	}
     	inrever--;
-    	valn--;
+    	n++;
+    	valn=2;
+    	fijdiagos++;
     	
 
 	
@@ -229,7 +247,7 @@ class calcula{
             for(int r=0;r<res.length;r++){
                 	    
         	
-        	   // System.out.println("Res: "+res[r][0]+" x:"+res[r][1]+" y:"+res[r][2]);
+        	    System.out.println("Res["+r+"]: "+res[r][0]+" x:"+res[r][1]+" y:"+res[r][2]);
         	    
         	
         	
