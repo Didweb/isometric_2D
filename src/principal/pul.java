@@ -1,6 +1,7 @@
 package principal;
 
-import java.awt.Component;
+
+import java.awt.Font;
 import java.awt.Graphics;
 
 import javax.swing.JFrame;
@@ -17,18 +18,17 @@ public class pul  extends JFrame {
     private static final long serialVersionUID = 1L;
 
 
-    
-    
-    
-    
     private void pantalla(){
         
-	calcula cal = new calcula();
+	calcula cal = new calcula(36,60,51,500,200);
+	cal.calcularIso();
+	
+	test test = new test(cal.getRes(), cal.getMapa());
 	
     	setSize(1200,1200);
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	setFocusable(true);
-    	add(cal);
+    	add(test);
     	setVisible(true);
         
     }
@@ -44,19 +44,62 @@ public class pul  extends JFrame {
     }
     
 
-class calcula extends JPanel{
+
+class test extends JPanel{
+    
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -167822327877707720L;
+    private int[][] res;
+    private int[] origen;
     
     
+    public test(int[][] res, int[] origen){
+	this.res = res;
+	this.origen = origen;
+    }
+   
     
     public void paint(Graphics g){
 	
-	//int[] mapa = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36};
-	
-	int relativaX;
-	int relativaY;
-    	int totalTils = 64;
+ 	for(int nAlma=0;nAlma<res.length;nAlma++){
+ 	   g.setFont(new Font("Arial", Font.PLAIN, 12));
+ 	    g.drawString(""+origen[res[nAlma][0]],res[nAlma][1], res[nAlma][2]); 
+ 	   g.setFont(new Font("Arial", Font.PLAIN, 8));
+ 	   g.drawString(""+res[nAlma][1]+"."+res[nAlma][2],res[nAlma][1]-10, res[nAlma][2]-10); 
+ 	    }
+    }
+    
+}
+
+
+
+
+class calcula{
+    
+    
+    private int totalTils;
+    private int relativaX;
+    private int relativaY;
+    private int altoTil;
+    private int anchoTil;
+    private int scrollX;
+    private int scrollY;
+    
+    private int[] mapa;
+    private int[][] res;
+    
+
+    public calcula(int totalTils,int anchoTil, int altoTil, int scrollX, int scrollY){
+    	this.totalTils = totalTils;
+    	this.anchoTil = anchoTil;
+    	this.altoTil = altoTil;
+    	this.scrollX = scrollX;
+    	this.scrollY = scrollY;
     	
-    	int[] mapa = new int [totalTils];
+    	mapa = new int [totalTils];
+    	
     	for(int n=0;n<totalTils;n++){
     	    mapa[n]=n+1;
     	    
@@ -65,30 +108,43 @@ class calcula extends JPanel{
     	for(int m: mapa){
     	    
     	    System.out.print(" , "+m);
-    	}
     	
+    	}
+    	System.out.println(" ");
+    	System.out.println("***-----------------------------------");
+	
+    }
+    
+    public void calcularIso(){
+
     	int cuadrante = (int) Math.sqrt(totalTils);
-    	int diago = (cuadrante+cuadrante)-6;
+    	int diago = cuadrante;
+    	
+    	res = new int[totalTils][3];
     	
     	int loopDiago = 0;
-    	int muestraPosi = 0;
-    	int regreLoop=1;
-    	int sum=0;
-
+    	int n = 0;
+    	int inicio_bu;
+    	int fin_bu;
     	
-    	 g.drawString(" totalTils: "+totalTils+" | cuadrante: "+cuadrante+" | diago: "+diago,500, 15);
     	
-    	 for (int f=0;f<diago;f++){
+    	
+    	    
+    	for (int f=0;f<diago;f++){
     	 System.out.println("---------------------------------- Diagonal: "+(f+1));
-     	int[] alma = new int[f+1];
-     	int[] almaX = new int[f+1];
-     	int[] almaY = new int[f+1];
+    	 int[] alma ;
+    	 int[] almaX;
+    	 int[] almaY;
+    	 alma = new int[f+1];
+     	 almaX = new int[f+1];
+     	 almaY = new int[f+1];
     	 
+     	 
+     	 
     	    for (int lp=loopDiago;lp>=0;lp--){
-        	    relativaX = (f-lp)*(32/2)+320;
-            	    relativaY = (f+lp)*(32/2)+120;
-            	   
-            	    
+
+//          	relativaX = (f-lp)*(anchoTil/2)+scrollX;
+//            	relativaY = (f+lp)*(altoTil/2)+scrollY; 
             	
             	if(f==0){
             	//muestraPosi=0;
@@ -98,6 +154,10 @@ class calcula extends JPanel{
             
             	
             	}
+            	
+            	relativaX = (f-lp)*(anchoTil/2)+(scrollX-(lp*anchoTil/2));
+            	relativaY = (f)*(altoTil)+scrollY;
+            	
             	alma[lp]=(lp*cuadrante);
             	if(lp==0 && f>0){
             	alma[lp]=f;   
@@ -106,13 +166,22 @@ class calcula extends JPanel{
             	    alma[lp]=alma[lp]+((f)-lp);
             	   // alma[lp]=alma[lp];//+((f+1)-lp);
             	}
-            	System.out.println(" cuadrante:"+cuadrante+" * "+lp+" = "+((lp*cuadrante))+"  valor["+lp+"]= "+alma[lp]);
+            	
             	almaX[lp]=relativaX;
             	almaY[lp]=relativaY;
+            	
+            	
+            	
+            	res[n][0] = alma[lp];
+            	res[n][1] = almaX[lp];
+            	res[n][2] = almaY[lp];
+            	
+            	System.out.println("["+n+"]  valor["+lp+"]= "+alma[lp]);
+            	n++;
     	    }
     	   
 
-
+    	 
 
     	 if (loopDiago<cuadrante){
     	 loopDiago++;  
@@ -121,15 +190,63 @@ class calcula extends JPanel{
     	 }
     	    
     	 
- 	    for(int nAlma=0;nAlma<alma.length;nAlma++){
-    		
-     	//System.out.println(" alma["+nAlma+"] = "+alma[nAlma]+"  => "+mapa[alma[nAlma]]+"   ||| lp:"+regreLoop+" * "+f);
-
-     	g.drawString(""+mapa[alma[nAlma]],almaX[nAlma], almaY[nAlma]); 
- 	    }
     	 
     	}
+    	
+    	int inrever = diago;
+    	int valn = diago;
+    	for(int f=0;f<diago;f++){
+    	System.out.println("---------------------------------- Diagonal: "+((f+diago)+1));
+   	 int[] alma ;
+   	 int[] almaX;
+   	 int[] almaY;
+   	 alma = new int[inrever];
+    	 almaX = new int[inrever];
+    	 almaY = new int[inrever];    
+    	 
+    	
+    	for (int x=0;x<inrever-1;x++){
+    	    	alma[x] = res[n-(valn)][0]+1;
+    	    	almaX[x] = 0;
+    	    	almaY[x] = 0;
+        	
+        	
+        	
+        	System.out.println(n+" - "+valn+" = "+(n-valn)+"  valor["+(n-valn)+"]= "+alma[x]);
+    	
+            	res[n][0] = alma[x];
+        	res[n][1] = almaX[x];
+        	res[n][2] = almaY[x];
+        	n++;
+    	}
+    	inrever--;
+    	valn--;
+    	
+
 	
+    	}
+    	
+            for(int r=0;r<res.length;r++){
+                	    
+        	
+        	   // System.out.println("Res: "+res[r][0]+" x:"+res[r][1]+" y:"+res[r][2]);
+        	    
+        	
+        	
+                	   
+                	}
+
+    }
+    
+
+
+    public int[][] getRes() {
+        return res;
+    }
+    
+    
+    public int[] getMapa() {
+        return mapa;
     }
     
 }
