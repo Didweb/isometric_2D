@@ -21,7 +21,7 @@ public class pul  extends JFrame {
 
     private void pantalla(){
         
-	calcula cal = new calcula(36,60,51,500,200);
+	calcula cal = new calcula(25,60,51,500,50);
 	cal.calcularIso();
 	
 	test test = new test(cal.getRes(), cal.getMapa());
@@ -197,11 +197,18 @@ class calcula{
     	 
     	 
     	}
+    	int ultimaX ;
+    	if(diago%2==0){
+    	ultimaX = scrollX-((diago/2)*anchoTil)+(anchoTil);  
+    	} else {
+    	ultimaX = scrollX-(((diago-1)/2)*anchoTil)+(anchoTil/2);
+    	}
     	
     	int inrever = diago;
     	int valn = diago;
     	int nn = n;
     	int fijdiagos=diago;
+    	
     	for(int f=0;f<diago;f++){
         	System.out.println("---------------------------------- Diagonal: "+((f+diago)+1));
        	 	int[] alma ;
@@ -222,9 +229,12 @@ class calcula{
             	    	}
             	    	
             	    	
-                    	relativaX = (f-x)*(anchoTil/2)+(scrollX-(x*anchoTil/4));
+//                    	relativaX = (f-x)*(anchoTil/2)+(scrollX-(x*anchoTil/4));
+//                    	relativaY = (f)*(altoTil)+scrollY+(diago*altoTil);
+//            	    	
+                    	relativaX = (anchoTil*x)+(ultimaX);
                     	relativaY = (f)*(altoTil)+scrollY+(diago*altoTil);
-            	    	
+                    	
             	    	almaX[x] = relativaX;
             	    	almaY[x] = relativaY;
                 	
@@ -241,6 +251,7 @@ class calcula{
                 	
                 	
             	}
+        	ultimaX = ultimaX + (anchoTil/2);
         	inrever--;
         	n++;
         	valn=2;
