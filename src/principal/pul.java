@@ -1,6 +1,7 @@
 package principal;
 
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
@@ -64,10 +65,14 @@ class test extends JPanel{
     public void paint(Graphics g){
 	
  	for(int nAlma=0;nAlma<res.length;nAlma++){
+ 	   g.setColor(Color.BLACK);
  	   g.setFont(new Font("Arial", Font.PLAIN, 12));
  	    g.drawString(""+origen[res[nAlma][0]],res[nAlma][1], res[nAlma][2]); 
  	   g.setFont(new Font("Arial", Font.PLAIN, 8));
  	   g.drawString(""+res[nAlma][1]+"."+res[nAlma][2],res[nAlma][1]-10, res[nAlma][2]-10); 
+ 	  g.setFont(new Font("Arial", Font.PLAIN, 8));
+ 	  g.setColor(Color.red);
+	   g.drawString(""+nAlma,res[nAlma][1]+20, res[nAlma][2]+20); 
  	    }
     }
     
@@ -194,51 +199,52 @@ class calcula{
     	}
     	
     	int inrever = diago;
-    	int valn = 2;
+    	int valn = diago;
     	int nn = n;
-    	int fijdiagos=1;
+    	int fijdiagos=diago;
     	for(int f=0;f<diago;f++){
-    	System.out.println("---------------------------------- Diagonal: "+((f+diago)+1));
-   	 int[] alma ;
-   	 int[] almaX;
-   	 int[] almaY;
-   	 alma = new int[inrever];
-    	 almaX = new int[inrever];
-    	 almaY = new int[inrever];    
-    	 
-    	
-    	for (int x=0;x<inrever-1;x++){
-    	    
-    	    
-    	    if (f==0){
-    		alma[x] = res[n-(valn)][0]+1;
-    	    } else {
-    		alma[x] = res[nn-(diago-fijdiagos)][0]+1;
-    	    }
-    	    	
-    	    	
-            	relativaX = (f-x)*(anchoTil/2)+(scrollX-(x*anchoTil/4));
-            	relativaY = (f)*(altoTil)+scrollY+(diago*altoTil);
-    	    	
-    	    	almaX[x] = relativaX;
-    	    	almaY[x] = relativaY;
+        	System.out.println("---------------------------------- Diagonal: "+((f+diago)+1));
+       	 	int[] alma ;
+       	 	int[] almaX;
+       	 	int[] almaY;
+       	 	alma = new int[inrever];
+        	almaX = new int[inrever];
+        	almaY = new int[inrever];    
+        	 
         	
-
-        	
-        	System.out.println(nn+" - "+(diago-(x))+" = "+(nn-(diago-(x)))+"  valor["+(nn-(diago-(x)))+"]= "+alma[x]);
-    	
-            	res[nn][0] = alma[x];
-        	res[nn][1] = almaX[x];
-        	res[nn][2] = almaY[x];
-        	
-        	valn++;
-        	nn++;
-        	
-    	}
-    	inrever--;
-    	n++;
-    	valn=2;
-    	fijdiagos++;
+        	for (int x=0;x<inrever-1;x++){
+        	    
+            	    
+            	    if (f==0){
+            		alma[x] = res[n-(valn)][0]+1;
+            	    	} else {
+            		alma[x] = res[nn-(fijdiagos)][0]+1;
+            	    	}
+            	    	
+            	    	
+                    	relativaX = (f-x)*(anchoTil/2)+(scrollX-(x*anchoTil/4));
+                    	relativaY = (f)*(altoTil)+scrollY+(diago*altoTil);
+            	    	
+            	    	almaX[x] = relativaX;
+            	    	almaY[x] = relativaY;
+                	
+        
+                	
+                	System.out.println(nn+" - "+fijdiagos+" = "+(nn-(fijdiagos))+"  valor["+(nn-(fijdiagos))+"]= "+alma[x]);
+            	
+                    	res[nn][0] = alma[x];
+                	res[nn][1] = almaX[x];
+                	res[nn][2] = almaY[x];
+                	
+                	valn--;
+                	nn++;
+                	
+                	
+            	}
+        	inrever--;
+        	n++;
+        	valn=2;
+        	fijdiagos--;
     	
 
 	
